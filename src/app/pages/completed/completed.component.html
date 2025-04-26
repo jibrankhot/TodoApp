@@ -1,0 +1,10 @@
+<h2>✅ Completed Tasks</h2>
+
+<div *ngIf="completedTodos.length === 0">No completed tasks yet!</div>
+
+<div *ngFor="let todo of completedTodos" class="completed-task">
+    <h3>{{ todo.title }}</h3>
+    <p *ngIf="todo.description">{{ todo.description }}</p>
+    <small *ngIf="todo.dueDate">Due: {{ todo.dueDate }}</small>
+    <hr />
+</div>

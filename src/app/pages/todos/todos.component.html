@@ -1,0 +1,74 @@
+<div *ngIf="editMode" class="edit-banner">
+    <mat-icon class="edit-icon">edit</mat-icon>
+    <strong>Editing Task</strong> — make your changes and click "Cancel Edit" if needed.
+</div>
+
+<!-- Task Filters -->
+
+<div class="task-filters">
+    <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Search Tasks</mat-label>
+        <input matInput [(ngModel)]="searchText" placeholder="Search by title or description" />
+    </mat-form-field>
+    <h3 class="todo-header">📝 To-Do List</h3>
+    <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" placeholder="Select Due Date" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<!-- Task Form -->
+<form [formGroup]="todoForm" (ngSubmit)="addTodo()" class="todo-form">
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required #titleInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Due Date</mat-label>
+        <input matInput type="date" formControlName="dueDate" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="button" (click)="editMode ? cancelEdit() : addTodo()">
+        {{ editMode ? '❌ Cancel Edit' : '➕ Add Task' }}
+    </button>
+</form>
+
+<hr class="divider" />
+
+<!-- Sorting and Filter Buttons -->
+<div class="action-buttons">
+    <button mat-raised-button color="primary" (click)="setSortOrder('asc')">📅 Sort by Earliest</button>
+    <button mat-raised-button color="primary" (click)="setSortOrder('desc')">📅 Sort by Latest</button>
+    <button mat-raised-button color="warn" (click)="confirmClearAll()">🧹 Clear All Tasks</button>
+</div>
+
+<!-- Task List -->
+<div class="task-list">
+    <mat-card *ngFor="let todo of filteredTodos() trackBy: trackByTodoId" [ngClass]="{ 'completed': todo.completed }">
+        <mat-card-title>{{ todo.title }}</mat-card-title>
+        <mat-card-content>
+            <p>{{ todo.description }}</p>
+            <p *ngIf="todo.dueDate"><small>Due: {{ todo.dueDate | date: 'shortDate' }}</small></p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="primary" (click)="editTodo(todo)">✏️ Edit</button>
+            <button mat-button color="accent" (click)="markComplete(todo)" [disabled]="todo.completed">✔
+                Complete</button>
+            <button mat-button color="warn" (click)="deleteTodo(todo.id)">🗑 Delete</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<!-- No Tasks Message -->
+<div *ngIf="filteredTodos().length === 0" class="no-tasks-message">
+    <p>🚫 No tasks found. Try changing your filters or adding a new task!</p>
+    <button mat-raised-button color="accent" (click)="resetFilters()">🔄 Clear Filters</button>
+</div>
