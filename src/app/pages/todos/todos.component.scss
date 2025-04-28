@@ -1,19 +1,19 @@
 /* Main Header */
 .todo-header {
-  font-size: 2.2rem; /* Reduced font size */
+  font-size: 2.2rem;
   font-weight: 700;
   color: #2c3e50;
   text-align: center;
-  margin-top: 10px; /* Reduced top margin */
+  margin-top: 10px;
 }
 
 /* Edit Banner */
 .edit-banner {
   background-color: #f39c12;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
   text-align: center;
-  border-radius: 8px; /* Reduced border-radius */
-  margin-bottom: 15px; /* Reduced bottom margin */
+  border-radius: 8px;
+  margin-bottom: 15px;
   font-weight: 600;
 }
 
@@ -21,32 +21,34 @@
 .task-filters {
   display: flex;
   justify-content: space-between;
-  gap: 12px; /* Reduced gap */
-  margin: 12px 2%; /* Reduced margin */
+  gap: 12px;
+  margin: 12px 2%;
 }
 
 .filter-field {
   width: 100%;
-  max-width: 280px; /* Reduced max width */
+  max-width: 280px;
 }
 
 /* Task Form */
 .todo-form {
   display: flex;
   flex-direction: column;
-  margin: 16px 2%; /* Reduced margin */
+  margin: 16px 2%;
 }
 
 .form-field {
-  margin-bottom: 12px; /* Reduced margin */
+  margin-bottom: 12px;
   width: 100%;
 }
 
+/* Buttons */
 button {
-  padding: 10px 18px; /* Reduced padding */
+  padding: 8px 18px;
   font-weight: 600;
   border-radius: 8px;
   transition: background-color 0.3s ease;
+  font-size: 14px;
 }
 
 button:hover {
@@ -57,13 +59,13 @@ button:hover {
 .action-buttons {
   display: flex;
   justify-content: space-between;
-  gap: 8px; /* Reduced gap */
-  margin: 12px 2%; /* Reduced margin */
+  gap: 8px;
+  margin: 12px 2%;
   flex-wrap: wrap;
 }
 
 .action-buttons button {
-  padding: 10px 16px; /* Reduced padding */
+  padding: 10px 16px;
   font-size: 14px;
 }
 
@@ -72,58 +74,65 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 12px 2%; /* Reduced margin */
+  margin: 12px 2%;
 }
 
+/* 👉 Drag-and-Drop Animation - Updated mat-card */
 mat-card {
   width: 48%;
-  margin-bottom: 16px; /* Reduced bottom margin */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Reduced shadow */
-  border-radius: 8px; /* Reduced border-radius */
-  transition: transform 0.3s ease-in-out;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 mat-card:hover {
   transform: translateY(-5px);
 }
 
+/* 🖐️ When dragging (CDK special classes) */
+mat-card.cdk-drag-preview {
+  transform: rotate(2deg) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border: solid 1px #ccc;
+}
+
+mat-card.cdk-drag-animating {
+  transition: transform 200ms ease;
+}
+
+/* 🛑 Hide Placeholder Card while dragging */
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
 mat-card-title {
-  font-size: 1.4rem; /* Reduced font size */
+  font-size: 1.4rem;
   font-weight: 700;
   color: #34495e;
 }
 
 mat-card-content {
-  font-size: 0.95rem; /* Reduced font size */
+  font-size: 0.95rem;
   color: #7f8c8d;
 }
 
 mat-card-actions {
   display: flex;
   justify-content: space-between;
-  padding: 12px; /* Reduced padding */
+  padding: 12px;
 }
 
 /* No Tasks Message */
 .no-tasks-message {
   text-align: center;
-  margin-top: 16px; /* Reduced margin */
+  margin-top: 16px;
 }
 
 /* Divider */
 .divider {
   border-top: 2px solid #ecf0f1;
-  margin: 16px 0; /* Reduced margin */
-}
-
-/* Button Styling */
-button {
-  padding: 8px 18px; /* Reduced padding */
-  font-size: 14px;
-}
-
-button:hover {
-  background-color: #f39c12;
+  margin: 16px 0;
 }
 
 /* Completed Task Styling */
@@ -134,11 +143,11 @@ button:hover {
 
 /* Form Input Fields */
 mat-form-field {
-  margin-bottom: 12px; /* Reduced bottom margin */
+  margin-bottom: 12px;
 }
 
 mat-form-field.mat-form-field-appearance-fill .mat-form-field-outline {
-  border-radius: 8px; /* Reduced border-radius */
+  border-radius: 8px;
   border-color: #bdc3c7;
 }
 
@@ -147,13 +156,13 @@ mat-form-field.mat-form-field-appearance-fill .mat-form-field-outline-thick {
 }
 
 mat-form-field.mat-form-field-appearance-fill .mat-form-field-infix {
-  font-size: 14px; /* Reduced font size */
+  font-size: 14px;
 }
 
 /* Custom Date Input Field */
 input[type="date"] {
-  padding: 6px; /* Reduced padding */
-  border-radius: 6px; /* Reduced border-radius */
+  padding: 6px;
+  border-radius: 6px;
   border: 1px solid #bdc3c7;
   font-size: 14px;
   transition: all 0.3s ease;
@@ -162,3 +171,69 @@ input[type="date"] {
 input[type="date"]:focus {
   border-color: #3498db;
 }
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Drag Handle */
+.drag-handle {
+  cursor: move;
+  color: #7f8c8d;
+  font-size: 24px;
+}
+
+.card-title-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priority-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+}
+
+.priority-badge.low {
+  background-color: #2ecc71; /* Green for Low */
+}
+
+.priority-badge.medium {
+  background-color: #f1c40f; /* Yellow for Medium */
+  color: black; /* Better readability */
+}
+
+.priority-badge.high {
+  background-color: #e74c3c; /* Red for High */
+}
+
+.priority-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  min-width: 60px;
+}
+
+.low {
+  background-color: #2ecc71; /* Green */
+}
+
+.medium {
+  background-color: #f1c40f; /* Yellow */
+}
+
+.high {
+  background-color: #e74c3c; /* Red */
+}
+

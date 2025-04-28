@@ -5,11 +5,24 @@ import { TodoService } from 'src/app/core/todo.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component'
+import { trigger, transition, style, animate } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls: ['./todos.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [   // when the element enters the DOM
+        style({ opacity: 0 }),
+        animate('500ms ease-out', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [   // when the element leaves the DOM (optional)
+        animate('300ms ease-in', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class TodosComponent implements OnInit {
   @ViewChild('titleInput') titleInput!: ElementRef;
@@ -42,7 +55,8 @@ export class TodosComponent implements OnInit {
     this.todoForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
-      dueDate: ['']
+      dueDate: [''],
+      priority: ['Medium', Validators.required],
     });
   }
 
@@ -63,6 +77,11 @@ export class TodosComponent implements OnInit {
 
   saveTodosToLocalStorage(): void {
     localStorage.setItem('todos', JSON.stringify(this.todos));
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.todos, event.previousIndex, event.currentIndex);
+    this.saveTodosToLocalStorage(); // Optional if you want saving after reorder
   }
 
   addTodo(): void {
@@ -103,6 +122,9 @@ export class TodosComponent implements OnInit {
     this.todoForm.reset();
   }
 
+  get noTasksFound(): boolean {
+    return this.filteredTodos().length === 0;
+  }
 
   editTodo(todo: any): void {
     this.editMode = true;

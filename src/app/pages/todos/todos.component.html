@@ -36,6 +36,16 @@
         <input matInput type="date" formControlName="dueDate" />
     </mat-form-field>
 
+    <!-- 👇 New Priority Field -->
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+            <mat-option value="High">High</mat-option>
+            <mat-option value="Medium">Medium</mat-option>
+            <mat-option value="Low">Low</mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <button mat-raised-button color="primary" type="button" (click)="editMode ? cancelEdit() : addTodo()">
         {{ editMode ? '❌ Cancel Edit' : '➕ Add Task' }}
     </button>
@@ -51,13 +61,26 @@
 </div>
 
 <!-- Task List -->
-<div class="task-list">
-    <mat-card *ngFor="let todo of filteredTodos() trackBy: trackByTodoId" [ngClass]="{ 'completed': todo.completed }">
-        <mat-card-title>{{ todo.title }}</mat-card-title>
+<div class="task-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-card *ngFor="let todo of filteredTodos(); trackBy: trackByTodoId" [ngClass]="{ 'completed': todo.completed }"
+        cdkDrag>
+        <div class="card-header">
+            <div class="card-title-container">
+                <mat-card-title>{{ todo.title }}</mat-card-title>
+                <span *ngIf="todo.priority" class="priority-badge" [ngClass]="todo.priority.toLowerCase()">
+                    {{ todo.priority }}
+                </span>
+            </div>
+            <mat-icon class="drag-handle" cdkDragHandle>reorder</mat-icon>
+        </div>
+
         <mat-card-content>
             <p>{{ todo.description }}</p>
-            <p *ngIf="todo.dueDate"><small>Due: {{ todo.dueDate | date: 'shortDate' }}</small></p>
+            <p *ngIf="todo.dueDate">
+                <small>Due: {{ todo.dueDate | date: 'shortDate' }}</small>
+            </p>
         </mat-card-content>
+
         <mat-card-actions>
             <button mat-button color="primary" (click)="editTodo(todo)">✏️ Edit</button>
             <button mat-button color="accent" (click)="markComplete(todo)" [disabled]="todo.completed">✔
@@ -67,8 +90,9 @@
     </mat-card>
 </div>
 
+
 <!-- No Tasks Message -->
-<div *ngIf="filteredTodos().length === 0" class="no-tasks-message">
+<div *ngIf="noTasksFound" @fadeInOut class="no-tasks-message">
     <p>🚫 No tasks found. Try changing your filters or adding a new task!</p>
     <button mat-raised-button color="accent" (click)="resetFilters()">🔄 Clear Filters</button>
 </div>
