@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component'
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todos',
@@ -39,7 +40,8 @@ export class TodosComponent implements OnInit {
     private fb: FormBuilder,
     private todoService: TodoService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -148,6 +150,9 @@ export class TodosComponent implements OnInit {
     this.loadTodos();
     this.showSnackbar('Task marked as complete!');
     this.saveTodosToLocalStorage();
+    setTimeout(() => {
+      this.router.navigate(['/complete']);
+    }, 600);
   }
 
   deleteTodo(id: number) {

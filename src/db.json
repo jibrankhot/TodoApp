@@ -1,0 +1,12 @@
+{
+    "todos": [
+      {
+        "id": 1,
+        "title": "Learn Angular",
+        "description": "Study the basics of Angular framework",
+        "dueDate": "2025-05-01",
+        "completed": false
+      }
+    ]
+  }
+  
