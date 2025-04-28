@@ -13,13 +13,13 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.scss'],
   animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [   // when the element enters the DOM
-        style({ opacity: 0 }),
-        animate('500ms ease-out', style({ opacity: 1 }))
+    trigger('fadeScaleInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.9)' }),  // Start slightly smaller and invisible
+        animate('400ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))  // Fade in and scale up
       ]),
-      transition(':leave', [   // when the element leaves the DOM (optional)
-        animate('300ms ease-in', style({ opacity: 0 }))
+      transition(':leave', [
+        animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' }))  // Fade out and shrink
       ])
     ])
   ]

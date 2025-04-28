@@ -2,15 +2,15 @@
     <mat-icon class="edit-icon">edit</mat-icon>
     <strong>Editing Task</strong> — make your changes and click "Cancel Edit" if needed.
 </div>
-
 <!-- Task Filters -->
-
 <div class="task-filters">
     <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Search Tasks</mat-label>
         <input matInput [(ngModel)]="searchText" placeholder="Search by title or description" />
     </mat-form-field>
+
     <h3 class="todo-header">📝 To-Do List</h3>
+
     <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Due Date</mat-label>
         <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" placeholder="Select Due Date" />
@@ -21,37 +21,48 @@
 
 <!-- Task Form -->
 <form [formGroup]="todoForm" (ngSubmit)="addTodo()" class="todo-form">
+    <!-- Title Field -->
     <mat-form-field appearance="fill" class="form-field">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" required #titleInput />
     </mat-form-field>
 
+    <!-- Description Field -->
     <mat-form-field appearance="fill" class="form-field">
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" />
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Due Date</mat-label>
-        <input matInput type="date" formControlName="dueDate" />
-    </mat-form-field>
+    <div class="duedate-container">
+        <!-- Due Date Field -->
+        <mat-form-field appearance="fill" class="filter-field">
+            <mat-label>Due Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" placeholder="Select Due Date" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-    <!-- 👇 New Priority Field -->
-    <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Priority</mat-label>
-        <mat-select formControlName="priority">
-            <mat-option value="High">High</mat-option>
-            <mat-option value="Medium">Medium</mat-option>
-            <mat-option value="Low">Low</mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <button mat-raised-button color="primary" type="button" (click)="editMode ? cancelEdit() : addTodo()">
-        {{ editMode ? '❌ Cancel Edit' : '➕ Add Task' }}
-    </button>
+        <!-- Priority Field -->
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+                <mat-option value="High">High</mat-option>
+                <mat-option value="Medium">Medium</mat-option>
+                <mat-option value="Low">Low</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="button-container">
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" type="button" (click)="addTodo()">
+            {{ '➕ Add Task' }}
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="cancelEdit()" disabled="title.touched">
+            {{ editMode ? '❌ Cancel Edit' :'❌ Cancel Task' }}
+        </button>
+    </div>
 </form>
 
-<hr class="divider" />
 
 <!-- Sorting and Filter Buttons -->
 <div class="action-buttons">
@@ -90,9 +101,8 @@
     </mat-card>
 </div>
 
-
 <!-- No Tasks Message -->
-<div *ngIf="noTasksFound" @fadeInOut class="no-tasks-message">
+<div *ngIf="noTasksFound" @fadeScaleInOut class="no-tasks-message">
     <p>🚫 No tasks found. Try changing your filters or adding a new task!</p>
     <button mat-raised-button color="accent" (click)="resetFilters()">🔄 Clear Filters</button>
 </div>

@@ -236,4 +236,15 @@ input[type="date"]:focus {
 .high {
   background-color: #e74c3c; /* Red */
 }
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+  justify-content: flex-start; /* Align buttons to the left */
+}
+.duedate-container {
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+  justify-content: flex-start; /* Align buttons to the left */
+}
+
 

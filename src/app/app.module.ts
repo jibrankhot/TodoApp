@@ -26,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSelectModule } from '@angular/material/select';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatSelectModule } from '@angular/material/select';
     HeaderComponent,
     FooterComponent,
     TaskCardComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
